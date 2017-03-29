@@ -32,7 +32,6 @@ while True:  # kym niekto nevyhra
     for hrac in range(number):  # tah kazdeho hraca
         print("Na tahu je hrac", hrac)
         hod = randint(1, 4)
-        #hod = 2
         print("Hodili ste", hod)
         figurka = int(input("Chcem ist figurkou č. (0 - 3):"))
         policko[hrac][figurka] += hod  # figurka sa posunie o hodeny pocet policok
@@ -42,14 +41,9 @@ while True:  # kym niekto nevyhra
             print("Hrac", hrac, "vyhral. Gratulujeme!")
             exit(0)
     tah += 1
-    #print(clovece)
-    #o = input("Ak chcete ukoncit hru po tomto tahu, stlacte \'a\':")
     print("Stav hracov po tahu", str(tah) + ":")
     for i in range(number):
         print("Hrac", i, ":", end=' ')
         for j in range(fig):
             print(policko[i][j], end=' ')
         print()
-
-    #if o == "a":
-        #exit(0)
