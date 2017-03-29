@@ -4,7 +4,7 @@ Hra je pre 2 - 6 hráčov, každý má 4 figúrky a hracia plocha má 40 políč
 V hre samozrejme existujú i kolízie, a preto, keď sa na nejakom polčkou stretnú dve figúrky, tak tá, čo tam prišla neskôr, tú druhú nemilosrdne vyhodí.
 
 ## Manuál k hre
-**Výber hráčov** 
+**Výber hráčov**  
 Na začiatku si vyberiete počet hráčov od 2 - 6
 
 **Hra**  
