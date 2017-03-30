@@ -1,60 +1,64 @@
 from random import randint
+from copy import deepcopy
 
 # Trieda reprezentujuca jehu hru clovece
 class Clovece:
     fig = 4; plocha = 40  # pocet figuriek, velkost plochy
-    kolo = 0 #pocitadlo kol
+
     status = ()
 
     # Konstruktor vytvori hru s danym poctom hracov z int <2, 6>
     def __init__(self, number):
-        self.number = number
-
         # Reprezentuje plochu clovece. Hodnoty typu (hrac, figurka)
-        self.clovece = [(-1, -1) for i in range(40)]
+        clovece = [(-1, -1) for i in range(40)]
 
         # Ulozime si, na ktorych polickach su jednotlive figurky hracov
-        self.policko = {i: [0 for j in range(self.fig)] for i in range(number)}
+        policko = {i: [0 for j in range(self.fig)] for i in range(number)}
 
-        # Ulozi stav plochy, pocet hracov, v ktorom kole sme,
-        # ktory hrac bol posledne na tahu
-        status = (self.clovece, number, 0, 0)
+        # Stav plochy, figuriek, pocet hracov, v ktorom kole sme, ktory hrac bol posledne na tahu
+        self.status = (clovece, policko, number, 0, 0)
 
         # Funkcia na detekciu kolizii s inou figurkou
     def kolizia(self, mojaPoloha):
-        if self.clovece[mojaPoloha] != (-1, -1):
-            hrac = self.clovece[mojaPoloha][0]
-            figurka = self.clovece[mojaPoloha][1]
+        if self.status[0][mojaPoloha] != (-1, -1):
+            hrac = self.status[0][mojaPoloha][0]
+            figurka = self.status[0][mojaPoloha][1]
             print("Kolizia s figurkou", figurka, "hraca", hrac)
-            self.policko[hrac][figurka] = 0  # ak tam uz je figurka, tak ta prva ide na 0
+            self.status[1][hrac][figurka] = 0  # ak tam uz je figurka, tak ta prva ide na 0
 
-    #Tah jedneho hraca
-    def tah(self, hrac):
+    # Tah jedneho hraca
+    def tah(self):
+        hrac = self.status[4]
+        kolo = self.status[3]
+        number = self.status[2]
+        policko = self.status[1]
+        clovece = self.status[0]
         print("Na tahu je hrac", hrac)
-        #hod = randint(1, 6) #hod kocky
-        hod = 2
+        hod = randint(1, 6) #hod kocky
+        #hod = 2
         print("Hodili ste", hod)
         figurka = int(input("Chcem ist figurkou č. (0 - 3): ")) #hrac si vyberie figurku
-        self.policko[hrac][figurka] += hod  # figurka sa posunie o hodeny pocet policok
-        self.kolizia(self.policko[hrac][figurka])  # riesenie kolizii: druhy vyhrava
-        self.clovece[self.policko[hrac][figurka]] = (hrac, figurka)  # nova na dane policko
-        print(self.clovece)
+        policko[hrac][figurka] += hod  # figurka sa posunie o hodeny pocet policok
+        self.kolizia(policko[hrac][figurka])  # riesenie kolizii: druhy vyhrava
+        clovece[policko[hrac][figurka]] = (hrac, figurka)  # nova na dane policko
+        print(self.status[2])
         print()
-        if self.policko[hrac][figurka] >= self.plocha:
+        if policko[hrac][figurka] >= self.plocha:
             print("Hrac", hrac, "vyhral. Gratulujeme!")
             exit(0)
-        self.status = (self.clovece, self.number, self.kolo, hrac)
+        self.status = (clovece, policko, number, kolo, hrac)
 
     def hraj(self):
+        pocet = self.status[2]
         while True:  # kym niekto nevyhra
-            for hrac in range(self.number):  # tah kazdeho hraca
-                self.tah(hrac)
-            self.kolo += 1
-            print("Stav hracov po kole", str(self.kolo) + ":")
-            for i in range(self.number):
+            for hrac in range(pocet):  # tah kazdeho hraca
+                self.tah()
+            self.status = (self.status[0], self.status[1], self.status[2], self.status[3] + 1, self.status[4])
+            print("Stav hracov po kole", str(self.status[3]) + ":")
+            for i in range(pocet):
                 print("Hrac", i, ":", end=' ')
                 for j in range(self.fig):
-                    print(self.policko[i][j], end=' ')
+                    print(self.status[1][i][j], end=' ')
                 print()
             print("\n")
 
