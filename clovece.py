@@ -31,7 +31,7 @@ hod = 0  # hod daneho hraca
 while True:  # kym niekto nevyhra
     for hrac in range(number):  # tah kazdeho hraca
         print("Na tahu je hrac", hrac)
-        hod = randint(1, 4)
+        hod = randint(1, 6)
         print("Hodili ste", hod)
         figurka = int(input("Chcem ist figurkou č. (0 - 3):"))
         policko[hrac][figurka] += hod  # figurka sa posunie o hodeny pocet policok
