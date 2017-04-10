@@ -52,6 +52,7 @@ class Clovece:
         pocet = self.status[2]
         while True:  # kym niekto nevyhra
             for hrac in range(pocet):  # tah kazdeho hraca
+                self.status = (self.status[0], self.status[1], self.status[2], self.status[3], hrac)
                 self.tah()
             self.status = (self.status[0], self.status[1], self.status[2], self.status[3] + 1, self.status[4])
             print("Stav hracov po kole", str(self.status[3]) + ":")
