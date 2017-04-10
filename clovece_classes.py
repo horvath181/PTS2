@@ -1,5 +1,4 @@
 from random import randint
-from copy import deepcopy
 
 # Trieda reprezentujuca jehu hru clovece
 class Clovece:
